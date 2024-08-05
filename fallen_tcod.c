@@ -68,12 +68,32 @@ static int l_map_set_properties(lua_State *L) {
     return 1;
 }
 
-static int l_map_get_transparency(lua_State *L) {
+static int l_map_is_transparent(lua_State *L) {
     MapContainer *m = checkmap(L, 1);
     int x = luaL_checkint(L, 2);  // TODO validize
     int y = luaL_checkint(L, 3);
+    
+    lua_pushboolean(L, TCOD_map_is_transparent(m->inner, x, y));
 
-    lua_pushboolean(L, m->inner->cells[x + y * m->inner->width].transparent);
+    return 1;
+}
+
+static int l_map_is_walkable(lua_State *L) {
+    MapContainer *m = checkmap(L, 1);
+    int x = luaL_checkint(L, 2);  // TODO validize
+    int y = luaL_checkint(L, 3);
+    
+    lua_pushboolean(L, TCOD_map_is_walkable(m->inner, x, y));
+
+    return 1;
+}
+
+static int l_map_is_in_fov(lua_State *L) {
+    MapContainer *m = checkmap(L, 1);
+    int x = luaL_checkint(L, 2);  // TODO validize
+    int y = luaL_checkint(L, 3);
+    
+    lua_pushboolean(L, TCOD_map_is_in_fov(m->inner, x, y));
 
     return 1;
 }
@@ -97,7 +117,9 @@ static const struct luaL_Reg fallen_tcod[] = {
     {"get_x", l_get_x},
     {"map_create", l_map_create},
     {"map_set_properties", l_map_set_properties},
-    {"map_get_transparency", l_map_get_transparency},
+    {"map_is_transparent", l_map_is_transparent},
+    {"map_is_walkable", l_map_is_walkable},
+    {"map_is_in_fov", l_map_is_in_fov},
     {"map_compute_fov", l_map_compute_fov},
     {NULL, NULL},
 };
