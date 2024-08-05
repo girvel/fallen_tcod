@@ -8,4 +8,6 @@ local map = tcod.map_create(2, 2)
 tcod.map_set_properties(map, 1, 0, true, false)
 assert(tcod.map_get_transparency(map, 1, 0) == true)
 assert(tcod.map_get_transparency(map, 0, 0) == false)
+
+tcod.map_compute_fov(map, 0, 0, 1, true, 0)
 print("Success!")

@@ -78,6 +78,19 @@ static int l_map_get_transparency(lua_State *L) {
     return 1;
 }
 
+static int l_map_compute_fov(lua_State *L) {
+    MapContainer *m = checkmap(L, 1);
+    int player_x = luaL_checkint(L, 2);
+    int player_y = luaL_checkint(L, 3);
+    int max_radius = luaL_checkint(L, 4);
+    bool light_walls = lua_toboolean(L, 5);
+    TCOD_fov_algorithm_t algorithm = (TCOD_fov_algorithm_t) luaL_checkint(L, 6);
+
+    TCOD_map_compute_fov(m->inner, player_x, player_y, max_radius, light_walls, algorithm);
+
+    return 1;
+}
+
 static const struct luaL_Reg fallen_tcod[] = {
     {"add", l_add},
     {"create_vector", l_create_vector},
@@ -85,6 +98,7 @@ static const struct luaL_Reg fallen_tcod[] = {
     {"map_create", l_map_create},
     {"map_set_properties", l_map_set_properties},
     {"map_get_transparency", l_map_get_transparency},
+    {"map_compute_fov", l_map_compute_fov},
     {NULL, NULL},
 };
 
