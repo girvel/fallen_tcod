@@ -2,6 +2,12 @@
 #include <lauxlib.h>
 #include "libtcod/fov.h"
 
+#ifdef BUILD_DLL
+#define DLL_EXPORT __declspec(dllexport)
+#else
+#define DLL_EXPORT __declspec(dllimport)
+#endif
+
 typedef struct {
     int x;
     int y;
@@ -124,7 +130,7 @@ static const struct luaL_Reg fallen_tcod[] = {
     {NULL, NULL},
 };
 
-int luaopen_fallen_tcod(lua_State *L) {
+DLL_EXPORT int luaopen_fallen_tcod(lua_State *L) {
     luaL_newmetatable(L, "Vector");
     luaL_newmetatable(L, "MapContainer");
     luaL_register(L, "fallen_tcod", fallen_tcod);
