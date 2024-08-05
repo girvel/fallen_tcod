@@ -1,6 +1,6 @@
 #include <lua.h>
 #include <lauxlib.h>
-#include "libtcod/fov.h"
+#include "fov.h"
 
 #ifdef BUILD_DLL
 #define DLL_EXPORT __declspec(dllexport)
