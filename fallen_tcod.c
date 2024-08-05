@@ -39,7 +39,12 @@ static int l_get_x(lua_State *L) {
     return 1;
 }
 
-static int l_create_map(lua_State *L) {
+static MapContainer *checkmap(lua_State *L, int index) {
+    luaL_checktype(L, index, LUA_TUSERDATA);
+    return (MapContainer *)luaL_checkudata(L, 1, "MapContainer");
+}
+
+static int l_map_create(lua_State *L) {
     int w = luaL_checkint(L, 1);
     int h = luaL_checkint(L, 2);
 
@@ -51,11 +56,35 @@ static int l_create_map(lua_State *L) {
     return 1;
 }
 
+static int l_map_set_properties(lua_State *L) {
+    MapContainer *m = checkmap(L, 1);
+    int x = luaL_checkint(L, 2);  // TODO validize
+    int y = luaL_checkint(L, 3);
+    bool transparent = lua_toboolean(L, 4);
+    bool walkable = lua_toboolean(L, 5);
+    
+    TCOD_map_set_properties(m->inner, x, y, transparent, walkable);
+
+    return 1;
+}
+
+static int l_map_get_transparency(lua_State *L) {
+    MapContainer *m = checkmap(L, 1);
+    int x = luaL_checkint(L, 2);  // TODO validize
+    int y = luaL_checkint(L, 3);
+
+    lua_pushboolean(L, m->inner->cells[x + y * m->inner->width].transparent);
+
+    return 1;
+}
+
 static const struct luaL_Reg fallen_tcod[] = {
     {"add", l_add},
     {"create_vector", l_create_vector},
     {"get_x", l_get_x},
-    {"create_map", l_create_map},
+    {"map_create", l_map_create},
+    {"map_set_properties", l_map_set_properties},
+    {"map_get_transparency", l_map_get_transparency},
     {NULL, NULL},
 };
 
