@@ -1,3 +1,3 @@
 all:
-	gcc -I/usr/include/lua5.1 add_lib.c -c -fPIC
-	gcc -I/usr/include/lua5.1 add_lib.c -shared -o add_lib.so
+	gcc -I/usr/include/lua5.1 fallen_tcod.c -c -fPIC
+	gcc fallen_tcod.o -shared -o fallen_tcod.so

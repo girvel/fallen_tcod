@@ -10,13 +10,13 @@ static int l_add(lua_State *L) {
     return 1;
 }
 
-static const struct luaL_Reg addlib [] = {
+static const struct luaL_Reg fallen_tcod[] = {
     {"add", l_add},
     {NULL, NULL},
 };
 
-int luaopen_add_lib(lua_State *L) {
-    luaL_register(L, "addlib", addlib);
+int luaopen_fallen_tcod(lua_State *L) {
+    luaL_register(L, "fallen_tcod", fallen_tcod);
     return 1;
 }
 

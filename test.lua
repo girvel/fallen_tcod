@@ -1,5 +1,5 @@
-local addlib = require("add_lib")
+local tcod = require("fallen_tcod")
 
 print("-- running tests --")
-assert(addlib.add(2, 2) == 4, "2 + 2 should be equal 4")
+assert(tcod.add(2, 2) == 4, "2 + 2 should be equal 4")
 print("Success!")
